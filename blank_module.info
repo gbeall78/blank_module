@@ -1,0 +1,9 @@
+name = Blank_Module
+description = Blank_Module description
+core = 7.x
+;stylesheets[all][] = some.css
+;scripts [] = some.js
+;dependencies[] = module name (major.minor)
+configure = admin/config/development/blank_module
+files[] = blank_module.test
+

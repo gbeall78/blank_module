@@ -1,0 +1,57 @@
+<?php
+/**
+ * @file
+ * Tests for the Blank_Module module
+ */
+
+class blank_moduleTestCase extends DrupalWebTestCase {
+  public static function getinfo() {
+    return array(
+      'name' => 'Blank_Module module functionality',
+      'description' => 'Test hooks in the Blank_Module module',
+      'group' => 'Blank_Module',
+    );
+  }
+
+  public function setUp() {
+    parent::setUp('blank_module');
+  }
+
+  public function testPermission(){
+    $data = module_invoke('blank_module', 'permission');
+
+    $this->assertTrue(is_array($data), t('Permission hook returns array.'));
+    $this->assertTrue(array_key_exists('access blank_module content', $data), t('Permission is as expected'));
+  }
+
+  public function testMenu() {
+    $items = module_invoke('blank_module', 'menu');
+
+    $this->assertEqual(2, count($items), t('Two items in menu'));
+    $this->assertIdentical($items['admin/config/development/blank_module']['title'],
+      $items['blank_module']['title'], t('Titles are identical.'));
+  }
+
+  public function testBlockView() {
+    $data = module_invoke('blank_module', 'block_view', 'blank_module');
+
+    $this->assertEqual(t('Blank_Module'), $data['subject'], t('Subject is as expected.'));
+    $this->assertNotNull($data['content'], t('Block contains data.'));
+  }
+
+  public function testBlockInfo(){
+    $info = module_invoke('blank_module', 'block_info');
+
+    $this->assertNotEqual('DRUPAL_CACHE_PER_USER', $info['blank_module']['cache'],
+      t('Cache is not set to DRUPAL_CACHE_PER_USER'));
+    $this->assertFalse(count($info) > 1, t('No more than one block defined.'));
+  }
+
+  public function testBlock(){
+    $info = module_invoke('blank_module', 'block_info');
+    $data = module_invoke('blank_module', 'block_view', 'blank_module');
+
+    $this->assertIdentical($info['blank_module']['info'], $data['subject'], t('Block list
+      name and subject are identical.'));
+  }
+}

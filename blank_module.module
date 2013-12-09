@@ -1,0 +1,107 @@
+<?php
+/**
+ * @file
+ * A Blank_Module module
+ */
+
+/**
+ * Implements hook_help()
+ *
+ * Displays help and module information
+ *
+ * @param path
+ *  Which part of the site we are using to display help
+ * @param arg
+ *  Array that holds the current path as returned by the arg() function
+ */
+
+function blank_module_help($path, $arg) {
+  switch ($path) {
+  case "admin/help#blank_module":
+    $output = '';
+    $output .= '<h3>' . t('About') . '<h3>';
+    $output .= '<p>' . t('The Blank_Module module does') . '</p>';
+    $output .= '<h3>' . t('Uses') . '</h3>';
+    $output .= '<dl>';
+    $output .= '<dt>' . t('Title of first use') . '</dt>';
+    $output .= '<dd>' . t('Usage information') . '</dd>';
+    $output .= '</dl>';
+    return $output;
+    break;
+  }
+}
+
+/**
+ * Implements hook_menu()
+ */
+
+function blank_module_menu() {
+  $items = array();
+  $items['admin/config/development/blank_module'] = array(
+    'title' => 'Blank_Module',
+    'description' => 'Description of Blank_Module',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('blank_module_form'),
+    'access arguments' => array('access administration pages'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'blank_module.admin.inc',
+  );
+  $items['blank_module'] = array(
+    'title' => 'Blank_Module',
+    'page callback' => '_blank_module_page',
+    'access arguments' => array('access blank_module content'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_permission()
+ */
+
+function blank_module_permission() {
+  return array(
+    'access blank_module content' => array(
+      'title' => t('Access content for the Blank_Module module'),
+    )
+  );
+}
+
+/**
+ * Implements hook_block_info()
+ */
+
+function blank_module_block_info() {
+  $blocks['blank_module'] = array(
+    //The name that will appear in the block list
+    'info' => t('Blank_Module'),
+    //Default settings
+    'cache' => DRUPAL_CACHE_PER_ROLE,
+  );
+  return $blocks;
+}
+
+/**
+ * Implement hook_block_view()
+ *
+ * Prepares the content of the block
+ */
+
+function blank_module_block_view($delta = '') {
+  switch ($delta) {
+  case 'blank_module':
+    $block['subject'] = t('Blank_Module');
+    if(user_access('access_content')){
+      //Retrieve data
+      $items = array();
+      //Theme output
+      if(!empty($items)) {
+        $block['content'] = theme('item_list', array(
+          'items' => $items));
+      }else{
+        $block['content'] = t('No data.');
+      }
+    }
+  }
+  return $block;
+}
