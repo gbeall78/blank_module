@@ -91,14 +91,15 @@ function blank_module_block_view($delta = '') {
   switch ($delta) {
   case 'blank_module':
     $block['subject'] = t('Blank_Module');
-    if(user_access('access_content')){
+    if (user_access('access_content')) {
       //Retrieve data
       $items = array();
       //Theme output
-      if(!empty($items)) {
+      if (!empty($items)) {
         $block['content'] = theme('item_list', array(
           'items' => $items));
-      }else{
+      }
+      else {
         $block['content'] = t('No data.');
       }
     }

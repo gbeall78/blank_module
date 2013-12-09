@@ -17,7 +17,7 @@ class blank_moduleTestCase extends DrupalWebTestCase {
     parent::setUp('blank_module');
   }
 
-  public function testPermission(){
+  public function testPermission() {
     $data = module_invoke('blank_module', 'permission');
 
     $this->assertTrue(is_array($data), t('Permission hook returns array.'));
@@ -39,7 +39,7 @@ class blank_moduleTestCase extends DrupalWebTestCase {
     $this->assertNotNull($data['content'], t('Block contains data.'));
   }
 
-  public function testBlockInfo(){
+  public function testBlockInfo() {
     $info = module_invoke('blank_module', 'block_info');
 
     $this->assertNotEqual('DRUPAL_CACHE_PER_USER', $info['blank_module']['cache'],
@@ -47,7 +47,7 @@ class blank_moduleTestCase extends DrupalWebTestCase {
     $this->assertFalse(count($info) > 1, t('No more than one block defined.'));
   }
 
-  public function testBlock(){
+  public function testBlock() {
     $info = module_invoke('blank_module', 'block_info');
     $data = module_invoke('blank_module', 'block_view', 'blank_module');
 

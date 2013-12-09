@@ -32,8 +32,8 @@ function blank_module_form($form, &$form_state) {
  */
 
 function blank_module_form_validate($form, &$form_state) {
-  $valueCheck = $form_state['values']['blank_module_setting1'];
-  if($valueCheck <= 0) {
+  $value_check = $form_state['values']['blank_module_setting1'];
+  if ($value_check <= 0) {
     form_set_error('blank_module_setting1', t('Value must be greater than zero'));
   }
 }
