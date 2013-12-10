@@ -5,36 +5,26 @@
  */
 
 /**
- * Implements hook_help()
- *
- * Displays help and module information
- *
- * @param path
- *  Which part of the site we are using to display help
- * @param arg
- *  Array that holds the current path as returned by the arg() function
+ * Implements hook_help().
  */
-
 function blank_module_help($path, $arg) {
   switch ($path) {
-  case "admin/help#blank_module":
-    $output = '';
-    $output .= '<h3>' . t('About') . '<h3>';
-    $output .= '<p>' . t('The Blank_Module module does') . '</p>';
-    $output .= '<h3>' . t('Uses') . '</h3>';
-    $output .= '<dl>';
-    $output .= '<dt>' . t('Title of first use') . '</dt>';
-    $output .= '<dd>' . t('Usage information') . '</dd>';
-    $output .= '</dl>';
-    return $output;
-    break;
+    case "admin/help#blank_module":
+      $output = '';
+      $output .= '<h3>' . t('About') . '<h3>';
+      $output .= '<p>' . t('The Blank_Module module does') . '</p>';
+      $output .= '<h3>' . t('Uses') . '</h3>';
+      $output .= '<dl>';
+      $output .= '<dt>' . t('Title of first use') . '</dt>';
+      $output .= '<dd>' . t('Usage information') . '</dd>';
+      $output .= '</dl>';
+      return $output;
   }
 }
 
 /**
- * Implements hook_menu()
+ * Implements hook_menu().
  */
-
 function blank_module_menu() {
   $items = array();
   $items['admin/config/development/blank_module'] = array(
@@ -56,53 +46,50 @@ function blank_module_menu() {
 }
 
 /**
- * Implements hook_permission()
+ * Implements hook_permission().
  */
-
 function blank_module_permission() {
   return array(
     'access blank_module content' => array(
       'title' => t('Access content for the Blank_Module module'),
-    )
+    ),
   );
 }
 
 /**
- * Implements hook_block_info()
+ * Implements hook_block_info().
  */
-
 function blank_module_block_info() {
   $blocks['blank_module'] = array(
-    //The name that will appear in the block list
+    // The name that will appear in the block list.
     'info' => t('Blank_Module'),
-    //Default settings
+    // Default settings.
     'cache' => DRUPAL_CACHE_PER_ROLE,
   );
   return $blocks;
 }
 
 /**
- * Implement hook_block_view()
+ * Implements hook_block_view().
  *
  * Prepares the content of the block
  */
-
 function blank_module_block_view($delta = '') {
   switch ($delta) {
-  case 'blank_module':
-    $block['subject'] = t('Blank_Module');
-    if (user_access('access_content')) {
-      //Retrieve data
-      $items = array();
-      //Theme output
-      if (!empty($items)) {
-        $block['content'] = theme('item_list', array(
-          'items' => $items));
+    case 'blank_module':
+      $block['subject'] = t('Blank_Module');
+      if (user_access('access_content')) {
+        // Retrieve data.
+        $items = array();
+        // Theme output.
+        if (!empty($items)) {
+          $block['content'] = theme('item_list', array(
+            'items' => $items));
+        }
+        else {
+          $block['content'] = t('No data.');
+        }
       }
-      else {
-        $block['content'] = t('No data.');
-      }
-    }
   }
   return $block;
 }

@@ -5,6 +5,10 @@
  */
 
 class blank_moduleTestCase extends DrupalWebTestCase {
+
+  /**
+   * Provides information required by SimpleTest.
+   */
   public static function getinfo() {
     return array(
       'name' => 'Blank_Module module functionality',
@@ -13,10 +17,18 @@ class blank_moduleTestCase extends DrupalWebTestCase {
     );
   }
 
+  /**
+   * Setup environment for testing.
+   *
+   * This is where users and permissions can be setup etc.
+   */
   public function setUp() {
     parent::setUp('blank_module');
   }
 
+  /**
+   * Test Blank_Module's permissions.
+   */
   public function testPermission() {
     $data = module_invoke('blank_module', 'permission');
 
@@ -24,6 +36,9 @@ class blank_moduleTestCase extends DrupalWebTestCase {
     $this->assertTrue(array_key_exists('access blank_module content', $data), t('Permission is as expected'));
   }
 
+  /**
+   * Test Blank_Module's menu items.
+   */
   public function testMenu() {
     $items = module_invoke('blank_module', 'menu');
 
@@ -32,6 +47,9 @@ class blank_moduleTestCase extends DrupalWebTestCase {
       $items['blank_module']['title'], t('Titles are identical.'));
   }
 
+  /**
+   * Test Blank_Module's block(s).
+   */
   public function testBlockView() {
     $data = module_invoke('blank_module', 'block_view', 'blank_module');
 
@@ -39,6 +57,9 @@ class blank_moduleTestCase extends DrupalWebTestCase {
     $this->assertNotNull($data['content'], t('Block contains data.'));
   }
 
+  /**
+   * Test Blank_Module's block information.
+   */
   public function testBlockInfo() {
     $info = module_invoke('blank_module', 'block_info');
 
@@ -47,6 +68,9 @@ class blank_moduleTestCase extends DrupalWebTestCase {
     $this->assertFalse(count($info) > 1, t('No more than one block defined.'));
   }
 
+  /**
+   * Test Blank_Module's blocks.
+   */
   public function testBlock() {
     $info = module_invoke('blank_module', 'block_info');
     $data = module_invoke('blank_module', 'block_view', 'blank_module');
