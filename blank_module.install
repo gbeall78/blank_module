@@ -1,0 +1,30 @@
+<?php
+/**
+ * @file
+ * Blank_Module install file.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function blank_module_schema() {
+  $schema['blank_module'] = array(
+    'description' => 'The base table for Blank_Module',
+    'fields' => array(
+      'id' => array(
+        'description' => 'Unique identifier.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+    ),
+  );
+  return $schema;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function blank_module_uninstall() {
+  drupal_uninstall_schema('blank_module');
+}
